@@ -4,3 +4,7 @@ set( json_SRCS
   json_writer.cpp
   )
 add_library( json ${json_SRCS} )
+install( TARGETS json
+  ARCHIVE DESTINATION lib COMPONENT Development
+  LIBRARY DESTINATION lib COMPONENT RuntimeLibraries
+  )
