@@ -80,6 +80,8 @@ and TARGET may be:
 * With CMake
   ----------
 
+Note that the tests require Python.
+
 # Run ctest from the build directory.
 ctest -j4
 
