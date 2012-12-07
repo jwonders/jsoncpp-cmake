@@ -5,27 +5,32 @@ import subprocess
 from glob import glob
 import optparse
 
-VALGRIND_CMD = 'valgrind --tool=memcheck --leak-check=yes --undef-value-errors=yes'
+VALGRIND_FLAGS = ['--tool=memcheck', '--leak-check=yes', '--undef-value-errors=yes']
 
 class TestProxy(object):
-    def __init__( self, test_exe_path, use_valgrind=False ):
+    def __init__( self, test_exe_path, use_valgrind=False,
+            valgrind_path='valgrind' ):
         self.test_exe_path = os.path.normpath( os.path.abspath( test_exe_path ) )
         self.use_valgrind = use_valgrind
+        self.valgrind_path = valgrind_path
 
     def run( self, options ):
         if self.use_valgrind:
-            cmd = VALGRIND_CMD.split()
+            cmd = [self.valgrind_path]
+            cmd.extend( VALGRIND_FLAGS )
         else:
             cmd = []
         cmd.extend( [self.test_exe_path, '--test-auto'] + options )
+        print(cmd)
         process = subprocess.Popen( cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT )
         stdout = process.communicate()[0]
         if process.returncode:
             return False, stdout
         return True, stdout
 
-def runAllTests( exe_path, use_valgrind=False ):
-    test_proxy = TestProxy( exe_path, use_valgrind=use_valgrind )
+def runAllTests( exe_path, use_valgrind=False, valgrind_path='valgrind' ):
+    test_proxy = TestProxy( exe_path, use_valgrind=use_valgrind,
+            valgrind_path=valgrind_path )
     status, test_names = test_proxy.run( ['--list-tests'] )
     if not status:
         print >> sys.stderr, "Failed to obtain unit tests list:\n" + test_names
@@ -59,6 +64,9 @@ def main():
     parser.add_option("--valgrind",
                   action="store_true", dest="valgrind", default=False,
                   help="run all the tests using valgrind to detect memory leaks")
+    parser.add_option("--valgrind-path",
+                  dest="valgrind_path", default="valgrind",
+                  help="path to the valgrind executable")
     parser.enable_interspersed_args()
     options, args = parser.parse_args()
 
@@ -66,7 +74,8 @@ def main():
         parser.error( 'Must provides at least path to test_lib_json executable.' )
         sys.exit( 1 )
 
-    exit_code = runAllTests( args[0], use_valgrind=options.valgrind )
+    exit_code = runAllTests( args[0], use_valgrind=options.valgrind,
+            valgrind_path=options.valgrind_path )
     sys.exit( exit_code )
 
 if __name__ == '__main__':
