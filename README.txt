@@ -13,9 +13,34 @@ making it a convenient format to store user input files.
 
 Unserialization parsing is user friendly and provides precise error reports.
 
+This version of JsonCpp, jsoncpp-cmake (https://github.com/TubeTK/jsoncpp-cmake)
+can be built with CMake (http://cmake.org) in addition to Scons.
+
 
 * Building/Testing:
   =================
+
+
+* With CMake
+  ----------
+
+jsonpp-cmake uses CMake (http://cmake.org) as a build system.
+
+# Make a build directory
+mkdir build
+cd build
+
+# Run the CMake configuration
+cmake ~/path/to/src
+
+# Build the project.  This is dependent on what "Generator" was specified with
+# the -G flag to CMake.  The default on Unix-like systems is a Makefile
+# generator.
+make -j4
+
+
+* With SCons
+  ----------
 
 JsonCpp uses Scons (http://www.scons.org) as a build system. Scons requires
 python to be installed (http://www.python.org).
@@ -51,6 +76,16 @@ and TARGET may be:
 
 * Running the test manually:
   ==========================
+
+* With CMake
+  ----------
+
+# Run ctest from the build directory.
+ctest -j4
+
+
+* With SCons
+  ----------
 
 Notes that test can be run by scons using the 'check' target (see above).
 
