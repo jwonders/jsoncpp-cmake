@@ -1,11 +1,11 @@
 * Introduction:
   =============
 
-JSON (JavaScript Object Notation) is a lightweight data-interchange format. 
-It can represent integer, real number, string, an ordered sequence of 
+JSON (JavaScript Object Notation) is a lightweight data-interchange format.
+It can represent integer, real number, string, an ordered sequence of
 value, and a collection of name/value pairs.
 
-JsonCpp (http://jsoncpp.sourceforge.net/) is a simple API to manipulate 
+JsonCpp (http://jsoncpp.sourceforge.net/) is a simple API to manipulate
 JSON value, handle serialization and unserialization to string.
 
 It can also preserve existing comment in unserialization/serialization steps,
@@ -23,14 +23,14 @@ python to be installed (http://www.python.org).
 You download scons-local distribution from the following url:
 http://sourceforge.net/projects/scons/files/scons-local/1.2.0/
 
-Unzip it in the directory where you found this README file. scons.py Should be 
+Unzip it in the directory where you found this README file. scons.py Should be
 at the same level as README.
 
 python scons.py platform=PLTFRM [TARGET]
 where PLTFRM may be one of:
 	suncc Sun C++ (Solaris)
 	vacpp Visual Age C++ (AIX)
-	mingw 
+	mingw
 	msvc6 Microsoft Visual Studio 6 service pack 5-6
 	msvc70 Microsoft Visual Studio 2002
 	msvc71 Microsoft Visual Studio 2003
@@ -38,17 +38,17 @@ where PLTFRM may be one of:
 	msvc90 Microsoft Visual Studio 2008
 	linux-gcc Gnu C++ (linux, also reported to work for Mac OS X)
 
-Notes: if you are building with Microsoft Visual Studio 2008, you need to 
+Notes: if you are building with Microsoft Visual Studio 2008, you need to
 setup the environment by running vcvars32.bat (e.g. MSVC 2008 command prompt)
 before running scons.
-	
-Adding platform is fairly simple. You need to change the Sconstruct file 
+
+Adding platform is fairly simple. You need to change the Sconstruct file
 to do so.
-	
+
 and TARGET may be:
 	check: build library and run unit tests.
 
-    
+
 * Running the test manually:
   ==========================
 
@@ -58,7 +58,7 @@ You need to run test manually only if you are troubleshooting an issue.
 
 In the instruction below, replace "path to jsontest.exe" with the path
 of the 'jsontest' executable that was compiled on your platform.
-  
+
 cd test
 # This will run the Reader/Writer tests
 python runjsontests.py "path to jsontest.exe"
@@ -84,9 +84,9 @@ Run the python script doxybuild.py from the top directory:
 
 python doxybuild.py --open --with-dot
 
-See doxybuild.py --help for options. 
+See doxybuild.py --help for options.
 
-Notes that the documentation is also available for download as a tarball. 
+Notes that the documentation is also available for download as a tarball.
 The documentation of the latest release is available online at:
 http://jsoncpp.sourceforge.net/
 
@@ -106,7 +106,7 @@ the following files are generated:
 - dist/jsoncpp.cpp: source file that need to be added to your project
 - dist/json/json.h: header file corresponding to use in your project. It is
 equivalent to including json/json.h in non-amalgamated source. This header
-only depends on standard headers. 
+only depends on standard headers.
 - dist/json/json-forwards.h: header the provides forward declaration
 of all JsonCpp types. This typically what should be included in headers to
 speed-up compilation.
@@ -118,27 +118,27 @@ of other headers.
 * Using json-cpp in your project:
   ===============================
 
-include/ should be added to your compiler include path. jsoncpp headers 
+include/ should be added to your compiler include path. jsoncpp headers
 should be included as follow:
 
 #include <json/json.h>
-  
+
 
 * Adding a reader/writer test:
   ============================
 
 To add a test, you need to create two files in test/data:
 - a TESTNAME.json file, that contains the input document in JSON format.
-- a TESTNAME.expected file, that contains a flatened representation of 
+- a TESTNAME.expected file, that contains a flatened representation of
   the input document.
-  
+
 TESTNAME.expected file format:
-- each line represents a JSON element of the element tree represented 
+- each line represents a JSON element of the element tree represented
   by the input document.
 - each line has two parts: the path to access the element separated from
-  the element value by '='. Array and object values are always empty 
+  the element value by '='. Array and object values are always empty
   (e.g. represented by either [] or {}).
-- element path: '.' represented the root element, and is used to separate 
+- element path: '.' represented the root element, and is used to separate
   object members. [N] is used to specify the value of an array element
   at index N.
 See test_complex_01.json and test_complex_01.expected to better understand
@@ -148,26 +148,26 @@ element path.
 * Understanding reader/writer test output:
   ========================================
 
-When a test is run, output files are generated aside the input test files. 
+When a test is run, output files are generated aside the input test files.
 Below is a short description of the content of each file:
 
 - test_complex_01.json: input JSON document
-- test_complex_01.expected: flattened JSON element tree used to check if 
+- test_complex_01.expected: flattened JSON element tree used to check if
     parsing was corrected.
 
-- test_complex_01.actual: flattened JSON element tree produced by 
+- test_complex_01.actual: flattened JSON element tree produced by
     jsontest.exe from reading test_complex_01.json
 - test_complex_01.rewrite: JSON document written by jsontest.exe using the
     Json::Value parsed from test_complex_01.json and serialized using
     Json::StyledWritter.
-- test_complex_01.actual-rewrite: flattened JSON element tree produced by 
+- test_complex_01.actual-rewrite: flattened JSON element tree produced by
     jsontest.exe from reading test_complex_01.rewrite.
 test_complex_01.process-output: jsontest.exe output, typically useful to
     understand parsing error.
 
 * License
   =======
-  
-See file LICENSE for details. Basically JsonCpp is licensed under 
+
+See file LICENSE for details. Basically JsonCpp is licensed under
 MIT license, or public domain if desired and recognized in your jurisdiction.
 
