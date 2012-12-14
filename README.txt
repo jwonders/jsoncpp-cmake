@@ -120,7 +120,7 @@ To configure your project to build against JsonCpp, add the following
 in your CMakeLists.txt:
 
 find_package( JsonCpp )
-include_directories( ${JsonCpp_INCLUDE_DIR} )
+include_directories( ${JsonCpp_INCLUDE_DIRS} )
 
 add_executable( example main.cxx )
 target_link_libraries( example ${JsonCpp_LIBRARIES} )
