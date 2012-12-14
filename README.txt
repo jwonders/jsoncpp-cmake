@@ -113,6 +113,17 @@ python rununittests.py "path to test_lib_json.exe"
 You can run the tests using valgrind:
 python rununittests.py --valgrind "path to test_lib_json.exe"
 
+* Building against JsonCpp:
+  =========================
+
+To configure your project to build against JsonCpp, add the following
+in your CMakeLists.txt:
+
+find_package( JsonCpp )
+include_directories( ${JsonCpp_INCLUDE_DIR} )
+
+add_executable( example main.cxx )
+target_link_libraries( example ${JsonCpp_LIBRARIES} )
 
 * Building the documentation:
   ===========================
